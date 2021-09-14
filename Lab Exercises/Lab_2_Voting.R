@@ -137,6 +137,34 @@ ESS%>% group_by(ptrust, cntry) %>% filter(!is.na(vote1), !is.na(ptrust)) %>%
   theme(legend.position = "bottom")+
   scale_x_discrete(labels=c("low" = "low", "medium" = "medium", "high" = "high"))
 
+
+# Finally, let's ask if young people vote. We can do this by comparing the percentage of young people found in the sample with the percentage found amongst the voters?
+
+a <- ESS %>% 
+filter(!is.na(age)) %>% 
+mutate(generation = if_else(age >= 18 & age <= 25, "18-25", "26+")) %>% 
+count(generation) %>% 
+mutate(percent = round(n /sum(n)*100, digits = 1)) 
+
+b <- ESS %>% 
+filter(!is.na(age)) %>% 
+mutate(generation = if_else(age >= 18 & age <= 25, "18-25", "26+")) %>% 
+filter(vote1 == "voted") %>% 
+group_by(generation) %>% 
+count(vote1) %>% 
+ungroup() %>% 
+mutate(percent = round(n/sum(n)*100, digits = 1))
+
+left_join(a, b, by = "generation") %>% 
+select(-c(n.x, n.y, vote1)) %>% 
+knitr::kable("pandoc", 
+             caption = "Percentage of Age within Sample and Percentage of Age Cohort amongst Voters",
+             col.names = c('Generation', 
+                           'Percentage Within Sample', 
+                           'Percentage Within Voters'), 
+             align="ccc") %>% 
+print()
+
 # Two questions to conclude with:
 
       #So, thinking over the theories we've look at: which ones work?
