@@ -22,9 +22,8 @@ ESS %>% group_by(cntry) %>% filter(!is.na(vote1)) %>%
 ESS %>% group_by(cntry) %>% filter(!is.na(vote1)) %>%
   count(vote1) %>% mutate(prop=prop.table(n*100)) %>%
   filter(!vote1=="did not vote") %>%
-  ggplot(aes(x=reorder(cntry, -prop), y=prop, fill=cntry)) +
+  ggplot(aes(x=reorder(cntry, -prop), y=prop)) +
   geom_bar(stat="identity")+
-  scale_fill_manual(values=c("#E69F00", "#009E73", "#0072B2", "#D55E00", "#56B4E9", "#CC79A7"))+
   labs(x="", y="", title="Figure 1: Turnout by Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()+
