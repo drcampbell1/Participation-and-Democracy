@@ -12,9 +12,8 @@
 #Let's start by looking at the data. Run the following line:
 
 ESS <- foreign::read.dta("data/ESS.dta", convert.factors=TRUE)
-attach(ESS)
-library(tidyverse)
 options(warn = -1)
+library(tidyverse)
 
 #Introduction to the data#
 
@@ -42,7 +41,8 @@ options(warn = -1)
 
                         # In total we have 12472 observations - or 12472 people gave us answers to our questions.
 
-ESS %>% count(cntry, sort=TRUE)
+ESS %>% 
+count(cntry, sort=TRUE)
 nrow(ESS)
 #Let's look at the data file and see what forms of participation it contains#
 
@@ -80,23 +80,37 @@ View(ESS)
 
 #How many people said they voted at the last national election?
 
-          ESS %>% filter(!is.na(vote1)) %>% count(vote1)
+          ESS %>% 
+          filter(!is.na(vote1)) %>% 
+          count(vote1)
 
 #Percentages are easier, so let's add them in:
 
-          ESS %>% filter(!is.na(vote1)) %>% count(vote1) %>% mutate('%' = round(n/sum(n)*100, digits=1))
+          ESS %>% 
+          filter(!is.na(vote1)) %>% 
+          count(vote1) %>% 
+          mutate('%' = round(n/sum(n)*100, digits=1))
 
 #Let's look at contacting politicians
 
-          ESS %>% filter(!is.na(contact)) %>% count(contact) %>% mutate('%' = round(n/sum(n)*100, digits=1))
+          ESS %>% 
+          filter(!is.na(contact)) %>% 
+          count(contact) %>% 
+          mutate('%' = round(n/sum(n)*100, digits=1))
 
 #Lets look at demonstrating
 
-          ESS %>% filter(!is.na(demo)) %>% count(demo) %>% mutate('%' = round(n/sum(n)*100, digits=1))
+          ESS %>% 
+          filter(!is.na(demo)) %>% 
+          count(demo) %>% 
+          mutate('%' = round(n/sum(n)*100, digits=1))
 
 # Let's look at voting for the radical right
 
-          ESS %>% filter(!is.na(rright)) %>% count(rright) %>% mutate('%' = round(n/sum(n)*100, digits=1))
+          ESS %>% 
+          filter(!is.na(rright)) %>% 
+          count(rright) %>% 
+          mutate('%' = round(n/sum(n)*100, digits=1))
 
 
 
