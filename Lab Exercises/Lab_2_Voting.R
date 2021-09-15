@@ -1,7 +1,7 @@
 ESS <- foreign::read.dta("data/ESS.dta", convert.factors=TRUE)
-attach(ESS)
-library(tidyverse)
 options(warn = -1)
+library(tidyverse)
+
 
 # Exercise 1: Let's look at voting#
 #Let's ask a simple question: do people vote?
@@ -23,11 +23,10 @@ ESS %>% group_by(cntry) %>% filter(!is.na(vote1)) %>%
   count(vote1) %>% mutate(prop=prop.table(n*100)) %>%
   filter(!vote1=="did not vote") %>%
   ggplot(aes(x=reorder(cntry, -prop), y=prop)) +
-  geom_bar(stat="identity")+
+  geom_col()+
   labs(x="", y="", title="Figure 1: Turnout by Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
-  theme_bw()+
-  guides(fill=FALSE)
+  theme_bw()
 
 #Exercise 2: Let's test our theories#
 #Q1: Do Socio-Economic Resources Matter#
@@ -137,7 +136,8 @@ ESS%>% group_by(ptrust, cntry) %>% filter(!is.na(vote1), !is.na(ptrust)) %>%
   scale_x_discrete(labels=c("low" = "low", "medium" = "medium", "high" = "high"))
 
 
-# Finally, let's ask if young people vote. We can do this by comparing the percentage of young people found in the sample with the percentage found amongst the voters?
+# Bonus Question: Let's ask if young people vote. 
+# We can do this by comparing the percentage of young people found in the sample with the percentage found amongst the voters?
 
 a <- ESS %>% 
 filter(!is.na(age)) %>% 
@@ -169,3 +169,5 @@ print()
       #So, thinking over the theories we've look at: which ones work?
 
       #Do all work equally well in all countries?
+
+      #Does it matter that young people seem less likely to vote?
