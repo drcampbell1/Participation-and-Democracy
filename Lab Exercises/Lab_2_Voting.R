@@ -164,7 +164,7 @@ knitr::kable("pandoc",
              align="ccc") %>% 
 print()
 
-# Two questions to conclude with:
+# Three questions to conclude with:
 
       #So, thinking over the theories we've look at: which ones work?
 
