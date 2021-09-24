@@ -116,17 +116,22 @@ View(ESS)
 # One graph to finish: let's compare the countries across the different forms of participation.
 
 ESS %>% 
-drop_na() %>% 
-pivot_longer((vote1:demo), names_to = "mode", values_to = "value") %>% 
-group_by(mode, cntry) %>% 
-count(value) %>% 
-mutate(percent = n/sum(n)*100) %>% 
-filter(value==str_remove(value, "not")) %>% 
-ggplot(aes(mode, percent))+
-geom_col(fill= "steelblue")+
-facet_wrap(~cntry)+
-theme_minimal()+
-scale_x_discrete(labels = c("Badge", "Contact", "Demostrate", "Petition", "Vote", "Work for Party"))+
-theme(axis.text.x = element_text(angle = 30, hjust = 1))
+  drop_na() %>% 
+  pivot_longer((vote1:demo), names_to = "mode", values_to = "value") %>% 
+  group_by(cntry, mode) %>% 
+  count(value) %>% 
+  mutate(percent = n/sum(n)*100) %>% 
+  filter(value==str_remove(value, "not")) %>% 
+  mutate(value = fct_reorder(value, percent)) %>% 
+  ggplot(aes(reorder(value, percent), percent))+
+  geom_col(fill="steelblue")+
+  facet_wrap(~cntry, scales = "free_x")+
+  coord_flip()+
+  theme_minimal()+
+  labs(x="", 
+       y = "%", 
+       title = "Comparing Political Participation Across\nEuropean Democracies (%)", 
+       caption = "Source: European Social Survey")
 
-# From which country do think people are the most engaged? 
+
+# From which country do you think people are most engaged? 
