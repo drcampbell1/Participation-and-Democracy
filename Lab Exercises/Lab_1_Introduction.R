@@ -128,10 +128,15 @@ ESS %>%
   facet_wrap(~cntry, scales = "free_x")+
   coord_flip()+
   theme_minimal()+
+  scale_x_discrete(labels = c("party worker", 
+                               "demonstrated", 
+                              "worn badge", 
+                              "contacted", 
+                              "petitioned",
+                              "voted"))+
   labs(x="", 
        y = "%", 
        title = "Comparing Political Participation Across\nEuropean Democracies (%)", 
        caption = "Source: European Social Survey")
-
 
 # From which country do you think people are most engaged? 
