@@ -24,6 +24,7 @@ ESS %>% group_by(cntry) %>% filter(!is.na(vote1)) %>%
   filter(!vote1=="did not vote") %>%
   ggplot(aes(x=reorder(cntry, -prop), y=prop)) +
   geom_col()+
+  geom_text(aes(label = round(prop*100, digits = 1)), color = "white", vjust = 1.2)+
   labs(x="", y="", title="Figure 1: Turnout by Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()
