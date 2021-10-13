@@ -33,9 +33,8 @@ ESS %>% group_by(cntry) %>% filter(!is.na(wparty)) %>%
 ESS %>% group_by(cntry) %>% filter(!is.na(wparty)) %>%
   count(wparty) %>% mutate(prop=prop.table(n*100)) %>%
   filter(!wparty=="have not worked for pp") %>%
-  ggplot(aes(x=reorder(cntry, -prop), y=prop, fill=cntry)) +
-  geom_bar(stat="identity")+
-  scale_fill_manual(values=c("#999999", "#000000", "#404040", "#BABABA", "#333333", "#CCCCCC"))+
+  ggplot(aes(x=reorder(cntry, -prop), y=prop)) +
+  geom_col()+geom_text(aes(label = round(prop*100, digits = 1)), color = "white", vjust = 1.2)+
   labs(x="", y="", title="Figure 1: Worked for Party by Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()+
@@ -80,7 +79,7 @@ ESS %>% group_by(educat, cntry) %>% filter(!is.na(wparty), !is.na(educat)) %>%
   filter(!wparty=="have not worked for pp") %>%
   ggplot(aes(x=educat, y=prop, fill=educat)) +
   geom_bar(stat="identity")+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow=2)+
   labs(x="", y="", title="Figure 3: Worked for Party by Education and Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()+
@@ -88,7 +87,7 @@ ESS %>% group_by(educat, cntry) %>% filter(!is.na(wparty), !is.na(educat)) %>%
   scale_x_discrete(labels=c("Basic" = "HS", "University degree" = "Uni", "postgrad" = "pg"))
 
 
-#Economically Optimistic Party Workers?
+#Are Party Workers Economically Optimistic?
 
 ESS %>% group_by(econsat) %>% filter(!is.na(wparty), !is.na(econsat)) %>%
   count(wparty) %>% mutate(prop=prop.table(n*100)) %>%
@@ -111,6 +110,31 @@ ESS %>% group_by(econsat, cntry) %>% filter(!is.na(wparty), !is.na(econsat)) %>%
   theme_bw()+
   guides(fill=FALSE)+
   scale_x_discrete(labels=c("dissatisfied" = "dis", "neither dissatisfied nor satisfied" = "neither", "satisfied" = "sat"))
+
+# Does social connectivity increase the likelihood of working for parties?
+
+ESS %>% group_by(socialise) %>% filter(!is.na(wparty), !is.na(socialise)) %>%
+    count(wparty) %>% mutate(prop=prop.table(n*100)) %>%
+    filter(!wparty=="have not worked for pp") %>%
+    ggplot(aes(x=socialise, y=prop, fill=socialise)) +
+    geom_bar(stat="identity")+
+    labs(x="", y="", title="Figure 6: Worked for Party by Social Activism", caption="ESS 2016")+
+    scale_y_continuous(labels=scales::percent)+
+    theme_bw()+
+    guides(fill=FALSE)
+
+# And does this vary by country?
+
+ESS %>% group_by(socialise, cntry) %>% filter(!is.na(wparty), !is.na(socialise)) %>%
+    count(wparty) %>% mutate(prop=prop.table(n*100)) %>%
+    filter(!wparty=="have not worked for pp") %>%
+    ggplot(aes(x=socialise, y=prop, fill=socialise)) +
+    geom_bar(stat="identity")+ facet_wrap(~cntry, nrow = 2)+
+    labs(x="", y="", title="Figure 7: Worked for Party by Social Activism", caption="ESS 2016")+
+    scale_y_continuous(labels=scales::percent)+
+    theme_bw()+
+    guides(fill=FALSE)
+
 
 rm(a,b,c,d)
 
