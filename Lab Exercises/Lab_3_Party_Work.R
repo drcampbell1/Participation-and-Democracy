@@ -104,7 +104,7 @@ ESS %>% group_by(econsat, cntry) %>% filter(!is.na(wparty), !is.na(econsat)) %>%
   filter(!wparty=="have not worked for pp") %>%
   ggplot(aes(x=econsat, y=prop, fill=econsat)) +
   geom_bar(stat="identity")+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   labs(x="", y="", title="Figure 5: Worked for Party by Economic Optimism and Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()+
