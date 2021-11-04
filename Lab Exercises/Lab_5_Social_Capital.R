@@ -100,7 +100,7 @@ ESS %>% filter(!is.na(socialise), !is.na(vote1)) %>%
   geom_col()+
   labs(x="", y="%", title="Figure 5: Voting by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_wrao(~cntry, nrow = 2)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # Contacting
