@@ -33,9 +33,8 @@ ESS %>% filter(!is.na(socialise)) %>% group_by(cntry) %>%
 ESS %>% group_by(cntry) %>% filter(!is.na(socialise)) %>%
   count(socialise) %>% mutate(prop=prop.table(n*100)) %>%
   filter(!socialise=="rare") %>%
-  ggplot(aes(x=reorder(cntry, -prop), y=prop, fill=cntry)) +
-  geom_bar(stat="identity")+
-  scale_fill_manual(values=c("#E69F00", "#009E73", "#0072B2", "#D55E00", "#56B4E9", "#CC79A7"))+
+  ggplot(aes(x=reorder(cntry, -prop), y=prop)) +
+  geom_col()+
   labs(x="", y="", title="Figure 1: Socialising by Country", caption="ESS 2016")+
   scale_y_continuous(labels=scales::percent)+
   theme_bw()+
@@ -97,11 +96,11 @@ ESS %>% filter(!is.na(socialise), !is.na(vote1)) %>%
   group_by(socialise, cntry) %>% count(vote1) %>%
   mutate(prop=n/sum(n)*100) %>%
   filter(!vote1 == "did not vote") %>%
-  ggplot(aes(x=socialise, y=prop, fill=vote1)) +
-  geom_bar(stat="identity", position = "dodge")+
+  ggplot(aes(x=socialise, y=prop)) +
+  geom_col()+
   labs(x="", y="%", title="Figure 5: Voting by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrao(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # Contacting
@@ -121,11 +120,11 @@ ESS %>% filter(!is.na(socialise), !is.na(contact)) %>%
   group_by(socialise, cntry) %>% count(contact) %>%
   mutate(prop=n/sum(n)*100) %>%
   filter(!contact == "have not contacted") %>%
-  ggplot(aes(x=socialise, y=prop, fill=contact)) +
-  geom_bar(stat="identity", position = "dodge")+
+  ggplot(aes(x=socialise, y=prop)) +
+  geom_col()+
   labs(x="", y="%", title="Figure 6: Contacting by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # Petition
@@ -144,11 +143,11 @@ ESS %>% filter(!is.na(socialise), !is.na(petition)) %>%
   group_by(socialise, cntry) %>% count(petition) %>%
   mutate(prop=n/sum(n)*100) %>%
   filter(!petition == "have not signed petition") %>%
-  ggplot(aes(x=socialise, y=prop, fill=petition)) +
-  geom_bar(stat="identity", position = "dodge")+
+  ggplot(aes(x=socialise, y=prop)) +
+  geom_col()+
   labs(x="", y="%", title="Figure 7: Petitioning by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 
@@ -168,11 +167,11 @@ ESS %>% filter(!is.na(socialise), !is.na(demo)) %>%
   group_by(socialise, cntry) %>% count(demo) %>%
   mutate(prop=n/sum(n)*100) %>%
   filter(!demo == "have not demonstrated") %>%
-  ggplot(aes(x=socialise, y=prop, fill=demo)) +
-  geom_bar(stat="identity", position = "dodge")+
+  ggplot(aes(x=socialise, y=prop)) +
+  geom_col()+
   labs(x="", y="%", title="Figure 3: Demonstrating by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # So, time to draw some conclusions.
