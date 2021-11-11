@@ -103,7 +103,7 @@ ESS %>% filter(!is.na(demo), !is.na(vote1)) %>%
   geom_bar(stat="identity", position = "dodge")+
   labs(x="", y="%", title="Figure 6: Demonstrating and Voting by Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
  # Petitioning 
@@ -126,7 +126,7 @@ ESS %>% filter(!is.na(demo), !is.na(petition)) %>%
   geom_bar(stat="identity", position = "dodge")+
   labs(x="", y="%", title="Figure 8: Petitioning by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # Contacting by Demonstrating
@@ -150,7 +150,7 @@ ESS %>% filter(!is.na(demo), !is.na(contact)) %>%
   geom_bar(stat="identity", position = "dodge")+
   labs(x="", y="%", title="Figure 9: Contacting by Socialising and Country", caption="ESS 2016")+
   theme_bw()+
-  facet_grid(~cntry)+
+  facet_wrap(~cntry, nrow = 2)+
   guides(fill=FALSE)
 
 # So what can we conclude overall about demonstrators? Does it look like it is a small group of people who demonstrate
